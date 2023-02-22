@@ -176,6 +176,18 @@ template<typename... Ts> class TurnOffAction : public Action<Ts...>, public Pare
   void play(Ts... x) override { this->parent_->panel_enable(false); }
 };
 
+template<typename... Ts> class SetBrightnessAction : public Action<Ts...>, public Parented<Hub75> {
+ public:
+
+ public:
+  TEMPLATABLE_VALUE(uint8_t, brightness)
+
+  void play(Ts... x) override {
+    auto brightness = this->brightness_.value(x...);
+    this->parent_->set_brightness(brightness);
+  }
+};
+
 
 }  // namespace hub75
 }  // namespace esphome
